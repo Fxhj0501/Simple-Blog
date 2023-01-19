@@ -18,6 +18,7 @@ import ContentBase from "../components/ContentBase.vue";
 import UserInfo from "../components/UserInfo.vue";
 import UserPosts from "../components/UserPosts.vue";
 import UserWrite from "../components/UserWrite.vue";
+import { useRoute } from "vue-router";
 export default {
   components: {
     ContentBase,
@@ -26,6 +27,8 @@ export default {
     UserWrite,
   },
   setup() {
+    const route = useRoute();
+    console.log(route.params.userId);
     const user = reactive({
       firstname: "Zijian",
       lastname: "Feng",

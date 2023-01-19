@@ -30,7 +30,7 @@
           <li class="nav-item">
             <router-link
               class="nav-link"
-              :to="{ name: 'userprofile', params: {} }"
+              :to="{ name: 'userprofile', params: { userId: 1 } }"
               >好友动态</router-link
             >
           </li>
