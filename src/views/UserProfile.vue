@@ -28,7 +28,7 @@ export default {
   },
   setup() {
     const route = useRoute();
-    console.log(route.params.userId);
+    const userId = route.params.userId;
     const user = reactive({
       firstname: "Zijian",
       lastname: "Feng",
@@ -66,6 +66,7 @@ export default {
       unfollow,
       user: user,
       submitPost,
+      userId,
     };
   },
 };
