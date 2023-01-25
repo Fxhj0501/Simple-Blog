@@ -15,7 +15,7 @@
           <div class="mb-3">
             <label for="Password" class="form-label">Password</label>
             <input
-              v-model="pwd"
+              v-model="password"
               type="password"
               class="form-control"
               id="Password"
@@ -33,6 +33,7 @@
 import ContentBase from "../components/ContentBase.vue";
 import { ref } from "vue";
 import { useStore } from "vuex";
+import router from "@/router/index";
 export default {
   name: "LoginView",
   components: {
@@ -41,23 +42,24 @@ export default {
   setup() {
     const store = useStore();
     let username = ref("");
-    let pwd = ref("");
+    let password = ref("");
     let error_message = ref("");
     const login = () => {
+      error_message.value = "";
       store.dispatch("login", {
         username: username.value,
-        password: pwd.value,
+        password: password.value,
         success() {
-          console.log("success");
+          router.push({ name: "userlist" });
         },
         error() {
-          console.log("failed");
+          error_message.value = "wrong username/password";
         },
       });
     };
     return {
       username,
-      pwd,
+      password,
       error_message,
       login,
     };
