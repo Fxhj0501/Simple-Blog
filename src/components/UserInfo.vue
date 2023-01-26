@@ -2,16 +2,12 @@
   <div class="card">
     <div class="card-body">
       <div class="row">
-        <div class="col-3">
-          <img
-            src="../../src/assets/touxiang.png"
-            class="img-fluid"
-            alt="..."
-          />
+        <div class="col-3 img-field">
+          <img :src="user.photo" class="img-fluid" alt="..." />
         </div>
         <div class="col-9">
-          <div class="username">{{ fullname }}</div>
-          <div class="fans">粉丝数:{{ user.follower }}</div>
+          <div class="username">{{ user.username }}</div>
+          <div class="fans">粉丝数:{{ user.followerCount }}</div>
           <button
             @click="follow"
             v-if="!user.isfollowed"
@@ -34,7 +30,8 @@
   </div>
 </template>
 <script>
-import { computed } from "vue";
+import $ from "jquery";
+import {useStore} from "vuex";
 export default {
   name: "UserInfo",
   props: {
@@ -44,17 +41,44 @@ export default {
     },
   },
   setup(props, context) {
-    let fullname = computed(
-      () => props.user.firstname + " " + props.user.lastname
-    );
+    const store = useStore();
     const follow = () => {
-      context.emit("follow");
+      $.ajax({
+        url:"https://app165.acapp.acwing.com.cn/myspace/follow/",
+        type:"POST",
+        crossDomain:true,
+        data:{
+          target_id:props.user.id,
+        },
+        headers: {
+          'Authorization': "Bearer " + store.state.user.access,
+        },
+        success(resp){
+          console.log(resp);
+          context.emit("follow");
+        }
+      })
+      
     };
     const unfollow = () => {
-      context.emit("unfollow");
+      $.ajax({
+        url:"https://app165.acapp.acwing.com.cn/myspace/follow/",
+        type:"POST",
+        crossDomain:true,
+        data:{
+          target_id:props.user.id,
+        },
+        headers: {
+          'Authorization': "Bearer " + store.state.user.access,
+        },
+        success(resp){
+          console.log(resp);
+          context.emit("unfollow");
+        }
+      })
+      
     };
     return {
-      fullname,
       follow,
       unfollow,
     };
@@ -78,5 +102,10 @@ button {
 }
 .card {
   text-align: center;
+}
+.img-field {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 </style>

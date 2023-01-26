@@ -24,13 +24,31 @@
 </template>
 <script>
 import { ref } from "vue";
+import $ from "jquery";
+import { useStore } from "vuex";
 export default {
   name: "UserWrite",
   setup(props, context) {
+    const store = useStore();
     let content = ref("");
     const submitPost = () => {
-      context.emit("submitPost", content.value);
-      content.value = "";
+      $.ajax({
+        url: "https://app165.acapp.acwing.com.cn/myspace/post/",
+        type: "POST",
+        crossDomain: true,
+        data: {
+          content: content.value,
+        },
+        headers: {
+          Authorization: "Bearer " + store.state.user.access,
+        },
+        success(resp) {
+          if (resp.result === "success") {
+            context.emit("submitPost", content.value);
+            content.value = "";
+          }
+        },
+      });
     };
     return {
       content,

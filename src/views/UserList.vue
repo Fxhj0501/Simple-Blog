@@ -8,7 +8,7 @@
     >
       <div class="card-body"></div>
       <div class="row">
-        <div class="col-1">
+        <div class="col-1 img-field">
           <img class="img-fluid" :src="user.photo" alt="" />
         </div>
         <div class="col-11">
@@ -66,7 +66,6 @@ export default {
 <style scoped>
 img {
   border-radius: 50%;
-  margin-bottom: 30px;
 }
 .username {
   font-weight: bold;
@@ -84,5 +83,11 @@ img {
 .card:hover {
   box-shadow: 2px 2px 10px lightgray;
   transform: 500ms;
+}
+.img-field {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 30px;
 }
 </style>
